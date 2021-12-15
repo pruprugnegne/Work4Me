@@ -5,6 +5,8 @@ var app = Express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+module.exports = app;
+
 var MongoClient = require("mongodb").MongoClient;
 const { request, response } = require("express");
 var CONNECTION_STRING = "mongodb+srv://admin:LaC8ubnAvlGxSOnv@cluster0.bnp7x.mongodb.net/test?authSource=admin&replicaSet=atlas-u1s8jo-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"
@@ -68,15 +70,67 @@ app.get('/api/annunci', (request, response) => {                                
 
 
 app.get('/api/annunci/test', (request, response) => {                                    //Ritorna annunci test
-
-    database.collection("AnnunciTest").find({}).toArray((error, result) => {
-        if (error) {
-            console.log(error);
+    
+    var result = [
+        {
+            "_id": {
+            "$oid": "61b1b99895c880c19dab8a33"
+            },
+            "_idProprietario": {
+            "$oid": "313233343536373839303132"
+            },
+            "titolo": "Dogsitter a Trento",
+            "descrizione": "Offro servizi di dogsitting nei pressi di Trento e dintorni",
+            "costo": "5",
+            "luogo": "Trento",
+            "categoria": "AnimaliDomestici",
+            "foto": "foto",
+            "voti": [
+            "4",
+            "5"
+            ],
+            "segnalazioni": 0,
+            "sponsorizzato": true,
+            "nascosto": false
+        },{
+            "_id": {
+            "$oid": "61b1c0baa1f86a1ede42740d"
+            },
+            "_idProprietario": {
+            "$oid": "61af3a1ed80d6205e1439553"
+            },
+            "titolo": "Curo il tuo giardino",
+            "descrizione": "Servizi di giardinaggio per terreni di piccole-medie dimensioni",
+            "costo": "7.5",
+            "luogo": "Civezzano",
+            "categoria": "Giardinaggio",
+            "foto": "foto",
+            "voti": [],
+            "segnalazioni": 0,
+            "sponsorizzato": false,
+            "nascosto": false
+        },{
+            "_id": {
+            "$oid": "61b1c150a1f86a1ede42740e"
+            },
+            "_idProprietario": {
+            "$oid": "61af3a1ed80d6205e1439553"
+            },
+            "titolo": "Falciatura dei campi",
+            "descrizione": "Offro servizi di giardinaggio per terreni di grandi dimensioni",
+            "costo": "10",
+            "luogo": "Borgo Valsugana",
+            "categoria": "Giardinaggio",
+            "foto": "foto",
+            "voti": [],
+            "segnalazioni": 0,
+            "sponsorizzato": false,
+            "nascosto": false
         }
+    ]
 
-        response.send(result);
-    })
-
+    response.json(result);
+    
 })
 
 
