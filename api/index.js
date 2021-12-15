@@ -15,6 +15,8 @@ var DATABASE = "test01";
 var database;
 var ObjectId = require('mongodb').ObjectId; 
 
+var crypto = require('crypto');
+
 var cors = require('cors');
 app.use(cors());
 
@@ -37,19 +39,6 @@ function refGenerator(length) {
     }
     return result;
 }
-
-/*
-function hash(string) {
-    const utf8 = new TextEncoder().encode(string);
-    return crypto.subtle.digest('SHA-256', utf8).then((hashBuffer) => {
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        const hashHex = hashArray
-        .map((bytes) => bytes.toString(16).padStart(2, '0'))
-        .join('');
-        return hashHex;
-    });
-}
-*/
 
 app.get('/', (request, response) => {
     response.json('Hello World');
@@ -206,10 +195,12 @@ app.get('/api/utenti/annunci/:id', (request, response) => {                     
 app.post('/api/utenti', (request, response) => {            //Crea nuovo utente
 
     var referral = refGenerator(13);
+    var password = request.body['password'];
+    var hash = crypto.createHash('sha256').update(password).digest('hex');
+
     database.collection("Utenti").insertOne({
         email: request.body['email'],
-        passwordHash: request.body['passwordHash'],
-        //passowrdHash: pswHash,
+        passwordHash: hash,
         refCode: referral,
         invitedBy: request.body['invitedBy'],
         preferiti: [],
