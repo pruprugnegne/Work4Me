@@ -18,6 +18,7 @@ var ObjectId = require('mongodb').ObjectId;
 var crypto = require('crypto');
 
 var cors = require('cors');
+const { stringify } = require("querystring");
 app.use(cors());
 
 app.listen(49146, () => {
@@ -57,8 +58,8 @@ app.get('/api/annunci', (request, response) => {                                
 
 })
 
-
-app.get('/api/annunci/test', (request, response) => {                                    //Ritorna annunci test
+/*
+app.get('/api/annunci/test2', (request, response) => {                                    //Ritorna annunci test
     
     var result = [
         {
@@ -120,6 +121,24 @@ app.get('/api/annunci/test', (request, response) => {                           
 
     response.json(result);
     
+})
+*/
+app.get('/api/annunci/test', (request, response) => {                                    //Ritorna annunci test
+
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, (error, client) => {
+        database = client.db(DATABASE);
+        //console.log("Mongo DB Connection Successfull");
+        database.collection("AnnunciTest").find({}).toArray((error, result) => {
+            if (error) {
+                console.log(error);
+            }
+
+            //console.log("\n\n\n\nNumero elementi: " + result.length);
+            result = JSON.parse(JSON.stringify(result));
+            response.status(200).send(result);
+        });
+    });
+
 })
 
 
@@ -216,6 +235,27 @@ app.post('/api/utenti', (request, response) => {            //Crea nuovo utente
 app.post('/api/annunci', (request, response) => {               //Crea nuovo annuncio
 
     database.collection("Annunci").insertOne({
+        _idProprietario: ObjectId(request.body['idProprietario']),          //??    
+        titolo: request.body['titolo'],
+        descrizione: request.body['descrizione'],
+        costo: request.body['costo'],
+        luogo: request.body['luogo'],
+        categoria: request.body['categoria'],
+        foto: request.body['foto'],                                         //??    Array di stringhe
+        voti: [],
+        segnalazioni: 0,
+        sponsorizzato: false,
+        nascosto: false
+    });
+
+    response.json("Added Successfully");
+
+})
+
+
+app.post('/api/annunci/test', (request, response) => {               //Crea nuovo annuncio test
+
+    database.collection("AnnunciTest").insertOne({
         _idProprietario: ObjectId(request.body['idProprietario']),          //??    
         titolo: request.body['titolo'],
         descrizione: request.body['descrizione'],
