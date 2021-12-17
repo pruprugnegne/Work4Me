@@ -3,7 +3,7 @@ root.innerHTML =
   '<nav class="navbar navbar-dark bg-dark justify-content-end">'+
     '<div class="container-fluid my-2">'+
       '<a class="navbar-brand" href="#">'+
-        '<img src="https://www.multiact.eu/wp-content/uploads/2018/11/UNITN_logo.png" alt="" width="40" height="40" class="d-inline-block align-text-top">'+
+        '<img src="logo.png" alt="" width="40" height="40" class="d-inline-block align-text-top">'+
         'Work4Me'+
         '<button type="button" class="btn btn-dark" onclick="window.location.href='+"'Index.html'"+'">Home</button>'+
         '<button type="button" class="btn btn-dark" onclick="window.location.href='+"'Profile.html?id=61b4e01b3ca11808c0daf528'"+'">Profilo</button>'+
