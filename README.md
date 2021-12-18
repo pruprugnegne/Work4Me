@@ -26,5 +26,5 @@ di una connessione ad internet per l'accesso al database online
       l'URL del file Index.html
  
  ## Testing
- Per effettuare il testing è sufficiente recarsi, tramite il terminale all'interno del percorso della 
+ Per effettuare il testing è sufficiente recarsi, tramite il terminale, all'interno del percorso della 
  cartella del progetto (come nello step 2 dell'installazione) e digitare il comando **npm test**
